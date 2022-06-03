@@ -48,7 +48,7 @@ async function run() {
   })
 })
 
-// order books API database code
+//(GET)Get order books API database code
 app.get('/orders', (req, res) => {
     orderList.find({})
     .toArray((err, documents) => {
@@ -56,6 +56,16 @@ app.get('/orders', (req, res) => {
     })
   })
   
+//   (POST)Post Add Books
+app.post('/addBookInfo', (req, res) => {
+    const newBookInfo = req.body;
+    console.log('adding book info', newBookInfo)
+    booksCollection.insertOne(newBookInfo)
+  .then(result =>{
+    console.log('inserted count',result.insertedCount)
+    res.send(result.insertedCount > 0)
+  })
+})
 
     }
     finally{
