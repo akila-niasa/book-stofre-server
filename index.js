@@ -11,7 +11,7 @@ app.use(express.json())
 // db_book_user
 // Z9GksubURt2Mw0gN
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bsuux.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 // client.connect(err => {
@@ -66,6 +66,15 @@ app.post('/addBookInfo', (req, res) => {
     res.send(result.insertedCount > 0)
   })
 })
+
+//(DELETE) Delete specific books API database code
+app.delete('/deleteBook/:id', (req, res) => {
+    const id = req.params.id ;
+    console.log(id)
+    booksCollection.deleteOne({_id:ObjectId(id)})
+    .then(document => res.send(document))
+  })
+
 
     }
     finally{
